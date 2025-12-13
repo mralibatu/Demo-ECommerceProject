@@ -1,370 +1,215 @@
-# E-Commerce Product Management System
-### TeamCity Demo Project
+# TeamCity Simple Demo Project
 
-[![Build Status](https://teamcity.example.com/app/rest/builds/buildType:id:MainBuild/statusIcon)](https://teamcity.example.com/project/EcommerceDemo)
-[![Quality Gate Status](https://sonarqube.example.com/api/project_badges/measure?project=ecommerce-product-management&metric=alert_status)](https://sonarqube.example.com/dashboard?id=ecommerce-product-management)
-[![Coverage](https://sonarqube.example.com/api/project_badges/measure?project=ecommerce-product-management&metric=coverage)](https://sonarqube.example.com/dashboard?id=ecommerce-product-management)
+A simple and stable demo project showcasing TeamCity CI/CD capabilities without complex dependencies.
 
-A comprehensive e-commerce product management system designed to showcase TeamCity CI/CD capabilities, best practices, and enterprise-level development workflows.
+## 🎯 Project Overview
 
-## 🏗️ Architecture Overview
+This is a minimalistic **Product Management System** built with:
+- **Backend**: Spring Boot with H2 database
+- **Frontend**: Vanilla JavaScript with Bootstrap
+- **Build Tool**: Maven
+- **CI/CD**: TeamCity (3 build configurations)
+- **Container**: Docker
 
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   React SPA     │    │  Spring Boot    │    │   PostgreSQL    │
-│   (Frontend)    │◄──►│   (Backend)     │◄──►│   (Database)    │
-│                 │    │                 │    │                 │
-│ • TypeScript    │    │ • REST API      │    │ • JPA/Hibernate │
-│ • Bootstrap     │    │ • Spring        │    │ • Flyway        │
-│ • React Query   │    │ • Validation    │    │ • Indexes       │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
-```
+## 🚀 Quick Start
 
-## 🚀 Features
+### Prerequisites
+- Java 11+
+- Maven 3.6+
+- Docker (optional)
 
-### Product Management
-- ✅ **CRUD Operations** - Create, read, update, delete products
-- ✅ **Category Management** - Organize products into categories
-- ✅ **Search & Filtering** - Advanced product search capabilities
-- ✅ **Stock Management** - Inventory tracking and low-stock alerts
-- ✅ **Validation** - Comprehensive input validation and error handling
-
-### Technical Features
-- ✅ **RESTful API** - OpenAPI/Swagger documented endpoints
-- ✅ **Responsive UI** - Mobile-friendly React interface
-- ✅ **Data Persistence** - PostgreSQL with H2 for testing
-- ✅ **Database Migration** - Flyway version control
-- ✅ **Security** - Spring Security integration
-- ✅ **Monitoring** - Actuator health checks and metrics
-
-## 🛠️ Technology Stack
-
-### Backend
-- **Framework**: Spring Boot 2.7.18
-- **Language**: Java 11
-- **Database**: PostgreSQL 15 / H2 (testing)
-- **ORM**: Spring Data JPA + Hibernate
-- **Migration**: Flyway
-- **Security**: Spring Security
-- **Documentation**: SpringDoc OpenAPI 3
-- **Build**: Maven 3.8+
-
-### Frontend
-- **Framework**: React 18
-- **Language**: TypeScript
-- **UI**: Bootstrap 5 + React Bootstrap
-- **HTTP Client**: Axios
-- **State Management**: React Query
-- **Routing**: React Router
-- **Forms**: React Hook Form
-- **Build**: Create React App
-
-### DevOps & Quality
-- **CI/CD**: TeamCity
-- **Code Quality**: SonarQube
-- **Code Coverage**: JaCoCo
-- **Static Analysis**: SpotBugs, PMD, Checkstyle
-- **Security**: OWASP Dependency Check, Snyk
-- **Testing**: JUnit 5, Mockito, TestContainers, Selenium
-- **Performance**: JMeter
-- **Containerization**: Docker + Docker Compose
-- **Monitoring**: Prometheus + Grafana
-
-## 📋 Prerequisites
-
-- **Java 11** or later
-- **Node.js 18** or later
-- **Docker** and Docker Compose
-- **Maven 3.8+** (or use included wrapper)
-- **TeamCity Server** (for CI/CD setup)
-
-## 🏃‍♂️ Quick Start
-
-### 1. Clone the Repository
+### Run Locally
 ```bash
-git clone https://github.com/teamcity-demo/ecommerce-product-management.git
-cd ecommerce-product-management
+# Clone the repository
+git clone <your-repo-url>
+cd simple-teamcity-demo
+
+# Run the application
+mvn spring-boot:run
+
+# Access the application
+open http://localhost:8080
 ```
 
-### 2. Backend Setup
-```bash
-# Using Maven wrapper
-./mvnw clean install
-
-# Run with development profile
-./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+### API Endpoints
+```
+GET    /api/products           # List all products
+POST   /api/products           # Create product
+GET    /api/products/{id}      # Get product by ID
+PUT    /api/products/{id}      # Update product
+DELETE /api/products/{id}      # Delete product
+GET    /api/products/search    # Search products
+GET    /api/products/stats     # Get statistics
 ```
 
-The backend will start on `http://localhost:8080`
-
-- **API Documentation**: http://localhost:8080/api/swagger-ui/index.html
-- **H2 Console**: http://localhost:8080/api/h2-console (dev profile)
-- **Actuator Health**: http://localhost:8080/api/actuator/health
-
-### 3. Frontend Setup
-```bash
-cd frontend
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
+### Health Check
 ```
-
-The frontend will start on `http://localhost:3000`
-
-### 4. Docker Setup (Recommended)
-```bash
-# Development environment
-docker-compose -f docker-compose.dev.yml up
-
-# Production environment
-docker-compose up
+GET /actuator/health          # Application health status
 ```
 
 ## 🧪 Testing
 
-### Run All Tests
 ```bash
-# Backend tests
-./mvnw clean test
+# Run all tests
+mvn test
 
-# Integration tests
-./mvnw clean verify
-
-# Frontend tests
-cd frontend && npm test
-
-# End-to-end tests
-./mvnw clean verify -Pe2e
-```
-
-### Test Coverage
-```bash
 # Generate coverage report
-./mvnw clean test jacoco:report
+mvn test jacoco:report
 
-# View coverage: target/site/jacoco/index.html
+# Run quality checks
+mvn checkstyle:check
 ```
 
-### Quality Checks
+## 🐳 Docker
+
 ```bash
-# Code style check
-./mvnw checkstyle:check
+# Build and run with Docker Compose
+docker-compose up --build
 
-# Static analysis
-./mvnw spotbugs:check pmd:check
-
-# SonarQube analysis
-./mvnw sonar:sonar -Dsonar.host.url=http://localhost:9000
+# Or build manually
+mvn package
+docker build -t teamcity-demo .
+docker run -p 8080:8080 teamcity-demo
 ```
 
 ## 🔧 TeamCity Configuration
 
-### Build Chain Overview
-The project includes a comprehensive TeamCity build chain with 10 build configurations:
+This project includes **3 TeamCity build configurations**:
 
-1. **Main Build** - Compile, test, package
-2. **Quality Gate** - SonarQube, Checkstyle, SpotBugs, PMD
-3. **Integration Tests** - TestContainers-based tests
-4. **Frontend Build** - React build and tests
-5. **E2E Tests** - Selenium WebDriver tests
-6. **Docker Build** - Multi-stage container builds
-7. **Security Scan** - OWASP + Snyk vulnerability scanning
-8. **Performance Tests** - JMeter load testing
-9. **Deploy Staging** - Automated staging deployment
-10. **Deploy Production** - Manual production deployment
+### 1. Build & Test
+- Compiles the code
+- Runs unit tests
+- Generates test reports
 
-### Build Features
-- ✅ **VCS Triggers** - Automatic builds on code changes
-- ✅ **Pull Request Builds** - GitHub PR integration
-- ✅ **Parallel Execution** - Optimized build chains
-- ✅ **Artifact Dependencies** - Efficient artifact sharing
-- ✅ **Build Templates** - Reusable configurations
-- ✅ **Environment Variables** - Parameterized builds
-- ✅ **Failure Conditions** - Smart failure handling
-- ✅ **Build Metrics** - Performance tracking
+### 2. Quality Check
+- Code coverage analysis (JaCoCo)
+- Code style check (Checkstyle)
+- Generates quality reports
 
-### Setup Instructions
+### 3. Package & Docker
+- Creates JAR file
+- Builds Docker image
+- Publishes artifacts
 
-1. **Import Configuration**
-   ```bash
-   # Copy TeamCity settings to your TeamCity server
-   cp -r .teamcity/* /path/to/teamcity/config/projects/
-   ```
-
-2. **Configure Parameters**
-   - Set up VCS root with your repository URL
-   - Configure Maven and JDK locations
-   - Set up SonarQube integration
-   - Configure Docker registry
-   - Set environment-specific parameters
-
-3. **Agent Requirements**
-   - Linux agents with Docker support
-   - JDK 11 and Maven 3.8+
-   - Node.js 18+ for frontend builds
-   - Chrome/ChromeDriver for E2E tests
-   - JMeter for performance tests
-
-## 📊 Monitoring & Observability
-
-### Application Metrics
-- **Health Checks**: http://localhost:8080/api/actuator/health
-- **Metrics**: http://localhost:8080/api/actuator/metrics
-- **Prometheus**: http://localhost:9090
-- **Grafana**: http://localhost:3001 (admin/admin)
-
-### Build Metrics
-TeamCity provides comprehensive build analytics:
-- Build duration trends
-- Test failure analysis
-- Code coverage evolution
-- Artifact size tracking
-- Agent utilization
-
-## 🔐 Security
-
-### Implementation
-- ✅ **Input Validation** - Bean validation with custom constraints
-- ✅ **SQL Injection Protection** - JPA/Hibernate parameterized queries
-- ✅ **XSS Protection** - Content Security Policy headers
-- ✅ **CSRF Protection** - Spring Security default settings
-- ✅ **Security Headers** - Comprehensive HTTP security headers
-
-### Security Scanning
-- **OWASP Dependency Check** - Vulnerability scanning
-- **Snyk** - Real-time security monitoring
-- **Container Scanning** - Trivy image analysis
-- **Code Analysis** - SpotBugs security rules
-
-## 📈 Performance
-
-### Backend Optimizations
-- ✅ **Connection Pooling** - HikariCP configuration
-- ✅ **JPA Optimization** - Lazy loading and query optimization
-- ✅ **Caching** - Application-level caching strategies
-- ✅ **Database Indexes** - Strategic index placement
-
-### Frontend Optimizations
-- ✅ **Code Splitting** - React lazy loading
-- ✅ **Bundle Optimization** - Webpack optimizations
-- ✅ **Caching Strategy** - Static asset caching
-- ✅ **Image Optimization** - Responsive image loading
-
-### Performance Testing
-- **JMeter Scripts** - Load and stress testing
-- **Performance Thresholds** - Automated performance gates
-- **Monitoring** - Real-time performance metrics
-
-## 🐳 Docker
-
-### Multi-stage Builds
-```dockerfile
-# Development build with hot reload
-docker build --target development .
-
-# Production optimized build
-docker build --target production .
+### Build Chain Flow
+```
+[Build & Test] → [Quality Check] → [Package & Docker]
 ```
 
-### Container Orchestration
-```bash
-# Full stack with monitoring
-docker-compose up
+## 📊 Features Demonstrated
 
-# Development with debugging
-docker-compose -f docker-compose.dev.yml up
+### TeamCity Features
+- ✅ **VCS Integration** - Automatic builds on commit
+- ✅ **Build Dependencies** - Sequential build chain
+- ✅ **Artifact Management** - JAR files and reports
+- ✅ **Test Integration** - Unit test execution
+- ✅ **Code Coverage** - JaCoCo integration
+- ✅ **Quality Gates** - Checkstyle validation
+- ✅ **Docker Integration** - Container builds
+- ✅ **Build Triggers** - VCS change detection
 
-# Production deployment
-docker-compose -f docker-compose.prod.yml up -d
+### Application Features
+- ✅ **CRUD Operations** - Create, read, update, delete products
+- ✅ **Search Functionality** - Find products by name
+- ✅ **Statistics Dashboard** - Product count and total value
+- ✅ **Responsive UI** - Mobile-friendly interface
+- ✅ **REST API** - JSON-based API endpoints
+- ✅ **Health Monitoring** - Application health checks
+
+## 🎬 Demo Scenarios
+
+### 1. **Basic CI/CD Flow**
+1. Make a code change
+2. Commit to repository
+3. Watch TeamCity automatically trigger builds
+4. See all 3 build configurations execute in sequence
+5. Review artifacts and reports
+
+### 2. **Test Failure Simulation**
+1. Introduce a test failure
+2. Commit the change
+3. Observe build failure in TeamCity
+4. Fix the issue
+5. Watch builds turn green
+
+### 3. **Quality Gate Demo**
+1. Introduce code style violations
+2. See quality check build fail
+3. Fix style issues
+4. See pipeline complete successfully
+
+## 📁 Project Structure
+
+```
+teamcity-simple-demo/
+├── src/
+│   ├── main/java/com/demo/
+│   │   ├── DemoApplication.java       # Main application
+│   │   ├── Product.java               # Product entity
+│   │   ├── ProductRepository.java     # Data access
+│   │   ├── ProductService.java        # Business logic
+│   │   └── ProductController.java     # REST endpoints
+│   ├── main/resources/
+│   │   ├── application.yml            # Configuration
+│   │   ├── data.sql                   # Sample data
+│   │   └── static/                    # Frontend files
+│   └── test/java/com/demo/
+│       ├── ProductServiceTest.java    # Unit tests
+│       ├── ProductControllerTest.java # Controller tests
+│       └── DemoApplicationTest.java   # Integration test
+├── .teamcity/
+│   └── settings.kts                   # TeamCity configuration
+├── Dockerfile                         # Container definition
+├── docker-compose.yml                # Local deployment
+├── pom.xml                           # Maven configuration
+└── README.md                         # This file
 ```
 
-## 📚 API Documentation
+## 🎯 Why This Demo Works
 
-### Interactive Documentation
-- **Swagger UI**: http://localhost:8080/api/swagger-ui/index.html
-- **OpenAPI Spec**: http://localhost:8080/api/v3/api-docs
+### ✅ **Simple & Stable**
+- Minimal dependencies
+- No complex frameworks
+- Proven technology stack
 
-### Key Endpoints
-```
-GET    /api/v1/products              # List products
-POST   /api/v1/products              # Create product
-GET    /api/v1/products/{id}         # Get product
-PUT    /api/v1/products/{id}         # Update product
-DELETE /api/v1/products/{id}         # Delete product
-GET    /api/v1/products/search       # Search products
-GET    /api/v1/categories            # List categories
-```
+### ✅ **TeamCity Focused**
+- Demonstrates core CI/CD features
+- Clear build pipeline
+- Easy to understand workflow
 
-## 🤝 Contributing
+### ✅ **Demo Friendly**
+- Fast build times (< 2 minutes)
+- Reliable execution
+- Clear success/failure indicators
 
-### Development Workflow
-1. Create feature branch from `main`
-2. Implement changes with tests
-3. Run quality checks locally
-4. Submit pull request
-5. TeamCity validates PR
-6. Code review and merge
+### ✅ **Professional Looking**
+- Modern UI with Bootstrap
+- REST API documentation
+- Docker containerization
 
-### Code Standards
-- **Java**: Google Java Style Guide
-- **TypeScript**: Prettier + ESLint
-- **Testing**: Minimum 80% coverage
-- **Documentation**: JavaDoc + TSDoc
+## 🛠️ Customization
 
-## 🎯 TeamCity Features Demonstrated
+### Add New Features
+1. Extend the `Product` entity
+2. Add new API endpoints in `ProductController`
+3. Update frontend in `static/` folder
+4. Add corresponding tests
 
-### Build Configuration
-- [x] **Build Steps** - Maven, Node.js, Docker, Script
-- [x] **Build Triggers** - VCS, Schedule, Manual
-- [x] **Build Templates** - Reusable configurations
-- [x] **Build Chains** - Sequential and parallel execution
-- [x] **Artifact Dependencies** - Cross-build artifact sharing
-
-### Testing Integration
-- [x] **Unit Tests** - JUnit + Jest execution
-- [x] **Integration Tests** - TestContainers
-- [x] **E2E Tests** - Selenium automation
-- [x] **Performance Tests** - JMeter integration
-- [x] **Test Reports** - HTML reports and trends
-
-### Quality Assurance
-- [x] **Code Coverage** - JaCoCo integration
-- [x] **Static Analysis** - Multiple tools integration
-- [x] **Security Scanning** - OWASP + Snyk
-- [x] **SonarQube** - Quality gate enforcement
-- [x] **Docker Security** - Container vulnerability scanning
-
-### Deployment Pipeline
-- [x] **Multi-Environment** - Dev, staging, production
-- [x] **Docker Builds** - Multi-stage builds
-- [x] **Health Checks** - Application monitoring
-- [x] **Rollback Strategy** - Automated rollback capabilities
-- [x] **Blue-Green Deployment** - Zero-downtime deployments
-
-### Advanced Features
-- [x] **VCS Integration** - Git branch strategies
-- [x] **Pull Request Builds** - GitHub integration
-- [x] **Build Notifications** - Multiple channels
-- [x] **Build Analytics** - Comprehensive metrics
-- [x] **Agent Management** - Requirements and pools
+### Modify TeamCity Pipeline
+1. Edit `.teamcity/settings.kts`
+2. Add new build steps or configurations
+3. Customize artifact rules
+4. Adjust quality thresholds
 
 ## 📞 Support
 
-For TeamCity-related questions:
-- 📧 Email: support@example.com
-- 📚 Documentation: [Internal Wiki](https://wiki.example.com)
-- 🎫 Issues: [GitHub Issues](https://github.com/teamcity-demo/ecommerce-product-management/issues)
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is designed for TeamCity demonstration purposes. For production use, consider:
+- Adding proper security
+- Using external database
+- Implementing proper error handling
+- Adding comprehensive logging
 
 ---
 
-<div align="center">
-  <strong>🚀 Built with ❤️ for TeamCity Excellence</strong><br>
-  Demonstrating enterprise-level CI/CD best practices
-</div>
+**🎉 Perfect for TeamCity Demos!**  
+Simple, stable, and showcases all the important CI/CD features.
