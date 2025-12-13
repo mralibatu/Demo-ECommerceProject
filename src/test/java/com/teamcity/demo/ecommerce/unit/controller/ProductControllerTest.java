@@ -76,10 +76,10 @@ class ProductControllerTest {
         when(productService.getProductById(1L)).thenReturn(testProductDto);
 
         mockMvc.perform(get("/v1/products/1"))
-                .andExpected(status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.sku").value("TEST-001"))
                 .andExpect(jsonPath("$.name").value("Test Product"))
-                .andExpected(jsonPath("$.price").value(99.99));
+                .andExpect(jsonPath("$.price").value(99.99));
     }
 
     @Test
@@ -133,7 +133,7 @@ class ProductControllerTest {
         mockMvc.perform(put("/v1/products/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(testProductDto)))
-                .andExpected(status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.sku").value("TEST-001"))
                 .andExpect(jsonPath("$.name").value("Test Product"));
     }
@@ -155,7 +155,7 @@ class ProductControllerTest {
 
         mockMvc.perform(get("/v1/products/search?q=test"))
                 .andExpect(status().isOk())
-                .andExpected(jsonPath("$.content[0].sku").value("TEST-001"))
+                .andExpect(jsonPath("$.content[0].sku").value("TEST-001"))
                 .andExpect(jsonPath("$.totalElements").value(1));
     }
 
@@ -196,7 +196,7 @@ class ProductControllerTest {
 
         mockMvc.perform(patch("/v1/products/1/stock?quantity=25"))
                 .andExpect(status().isOk())
-                .andExpected(jsonPath("$.quantity").value(25));
+                .andExpect(jsonPath("$.quantity").value(25));
     }
 
     @Test

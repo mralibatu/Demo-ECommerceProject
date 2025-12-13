@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvctest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebMvc
 @TestPropertySource(properties = {
     "spring.datasource.url=jdbc:h2:mem:testdb",
@@ -139,7 +139,7 @@ class ProductIntegrationTest {
     @DisplayName("Should search products successfully")
     void shouldSearchProducts() throws Exception {
         mockMvc.perform(get("/v1/products/search?q=smartphone"))
-                .andExpected(status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(1)))
                 .andExpect(jsonPath("$.content[0].name").value("Smartphone"));
 
@@ -154,7 +154,7 @@ class ProductIntegrationTest {
         mockMvc.perform(get("/v1/products/category/" + testCategory.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content", hasSize(1)))
-                .andExpected(jsonPath("$.content[0].categoryId").value(testCategory.getId()));
+                .andExpect(jsonPath("$.content[0].categoryId").value(testCategory.getId()));
     }
 
     @Test
@@ -174,7 +174,7 @@ class ProductIntegrationTest {
     @DisplayName("Should update stock successfully")
     void shouldUpdateStock() throws Exception {
         mockMvc.perform(patch("/v1/products/" + testProduct.getId() + "/stock?quantity=100"))
-                .andExpected(status().isOk())
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.quantity").value(100));
     }
 
