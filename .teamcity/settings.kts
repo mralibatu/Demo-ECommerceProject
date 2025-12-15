@@ -8,19 +8,21 @@ version = "2019.2"
 
 project {
     description = "TeamCity Simple Demo Project"
-
-    vcsRoot(GitVcsRoot {
-        id("DemoVcsRoot")
-        name = "Demo VCS Root"
-        url = "https://github.com/your-org/teamcity-simple-demo.git"
-        branch = "refs/heads/main"
-        branchSpec = "+:refs/heads/*"
-    })
+    
+    vcsRoot(DemoVcsRoot)
 
     buildType(Build)
     buildType(QualityCheck)
     buildType(Package)
 }
+
+object DemoVcsRoot : GitVcsRoot({
+    id("DemoVcsRoot")
+    name = "Demo VCS Root"
+    url = "https://github.com/your-org/teamcity-simple-demo.git"
+    branch = "refs/heads/main"
+    branchSpec = "+:refs/heads/*"
+})
 
 object Build : BuildType({
     id("Build")
@@ -28,9 +30,7 @@ object Build : BuildType({
     description = "Compile code and run tests"
 
     vcs {
-        root(GitVcsRoot {
-            id("DemoVcsRoot")
-        })
+        root(DemoVcsRoot)
         cleanCheckout = true
     }
 
@@ -67,9 +67,7 @@ object QualityCheck : BuildType({
     description = "Code quality analysis and coverage"
 
     vcs {
-        root(GitVcsRoot {
-            id("DemoVcsRoot")
-        })
+        root(DemoVcsRoot)
     }
 
     dependencies {
@@ -108,9 +106,7 @@ object Package : BuildType({
     description = "Create JAR file and Docker image"
 
     vcs {
-        root(GitVcsRoot {
-            id("DemoVcsRoot")
-        })
+        root(DemoVcsRoot)
     }
 
     dependencies {
